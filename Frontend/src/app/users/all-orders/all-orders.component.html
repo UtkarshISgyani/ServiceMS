@@ -1,0 +1,34 @@
+<mat-card>
+    <mat-card-content>
+        <h1>Pending Services</h1>
+
+        <button mat-raised-button color="accent" (click)="sendEmail()">
+            Send Email About Orders
+        </button>
+        <button mat-raised-button color="accent" (click)="blockUsers()">
+            Block Account
+        </button>
+    </mat-card-content>
+
+    <mat-card-footer>
+        @if (showProgressBar) {
+        <mat-progress-bar mode="indeterminate"
+                          color="accent">
+        </mat-progress-bar>
+        }
+    </mat-card-footer>
+</mat-card>
+
+<page-table [columns]="columnsForPendingReturns"
+            [dataSource]="ordersWithPendingReturns">
+</page-table>
+
+<mat-card>
+    <mat-card-content>
+        <h1>Completed Services</h1>
+    </mat-card-content>
+</mat-card>
+
+<page-table [columns]="columnsForCompletedReturns"
+            [dataSource]="ordersWithCompletedReturns">
+</page-table>
