@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   AccountStatus,
-  Book,
+  Service,
   Order,
   User,
   UserType,
@@ -11,7 +11,7 @@ import { ApiService } from '../../services/api.service';
 @Component({
   selector: 'page-table',
   templateUrl: './page-table.component.html',
-  styleUrl: './page-table.component.scss'
+  styleUrl: './page-table.component.scss',
 })
 export class PageTableComponent {
   @Input()
@@ -26,9 +26,7 @@ export class PageTableComponent {
   @Output()
   unblock = new EventEmitter<User>();
 
- /* getFineToPay(order: Order) {
-    return this.apiService.getFine(order);
-  }*/
+  
 
   constructor(private apiService: ApiService) {}
 

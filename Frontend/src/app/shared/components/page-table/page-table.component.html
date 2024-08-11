@@ -1,6 +1,6 @@
 <table mat-table [dataSource]="dataSource">
 
-    <!-- User Info -->
+  
     <ng-container matColumnDef="userId">
         <th mat-header-cell *matHeaderCellDef>User ID</th>
         <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
@@ -69,7 +69,7 @@
         </td>
     </ng-container>
 
-    <!-- Order -->
+     Order 
     <ng-container matColumnDef="orderId">
         <th mat-header-cell *matHeaderCellDef>Order ID</th>
         <td mat-cell *matCellDef="let element">{{element.id}}</td>
@@ -85,14 +85,14 @@
         <td mat-cell *matCellDef="let element">{{element.userName}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="bookId">
+    <ng-container matColumnDef="serviceId">
         <th mat-header-cell *matHeaderCellDef>Service ID</th>
-        <td mat-cell *matCellDef="let element">{{element.bookId}}</td>
+        <td mat-cell *matCellDef="let element">{{element.serviceId}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="bookTitle">
-        <th mat-header-cell *matHeaderCellDef>Service Category</th>
-        <td mat-cell *matCellDef="let element"> {{element.bookTitle}} </td>
+    <ng-container matColumnDef="serviceTitle">
+        <th mat-header-cell *matHeaderCellDef>Service Title</th>
+        <td mat-cell *matCellDef="let element"> {{element.serviceTitle}} </td>
     </ng-container>
 
     <ng-container matColumnDef="orderDate">
@@ -104,19 +104,19 @@
 
     <ng-container matColumnDef="fineToPay">
         <th mat-header-cell *matHeaderCellDef>Payment</th>
-        <td mat-cell *matCellDef="let element">100<!-- {{getFineToPay(element)}}--> </td>
+        <td mat-cell *matCellDef="let element"> {{1000}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="returnedDate">
-        <th mat-header-cell *matHeaderCellDef>Service Completion Date</th>
+    <ng-container matColumnDef="completedDate">
+        <th mat-header-cell *matHeaderCellDef>Completed Date</th>
         <td mat-cell *matCellDef="let element">
-            {{element.returnDate | date:"dd-MMM-YYYY"}}
+            {{element.completeDate | date:"dd-MMM-YYYY"}}
         </td>
     </ng-container>
 
     <ng-container matColumnDef="finePaid">
-        <th mat-header-cell *matHeaderCellDef>Payment</th>
-        <td mat-cell *matCellDef="let element">{{element.finePaid}}</td>
+        <th mat-header-cell *matHeaderCellDef>Paid</th>
+        <td mat-cell *matCellDef="let element">{{1000}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columns"></tr>

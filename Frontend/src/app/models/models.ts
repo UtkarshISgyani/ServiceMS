@@ -18,40 +18,40 @@ export interface User {
   
   export enum UserType {
     ADMIN,
-    STUDENT,
+    CUSTOMER,
   }
-
-  export interface BookCategory {
+  
+  export interface ServiceCategory {
     id: number;
     category: string;
     subCategory: string;
   }
-
-  export interface Book {
+  
+  export interface Service {
     id: number;
     title: string;
-    author: string;
+    serviceType: string;
     price: number;
     ordered: boolean;
-    bookCategoryId: number;
-    bookCategory: BookCategory;
+    serviceCategoryId: number;
+    serviceCategory: ServiceCategory;
   }
-
-  export interface BooksByCategory {
-    bookCategoryId: number;
+  
+  export interface ServicesByCategory {
+    serviceCategoryId: number;
     category: string;
     subCategory: string;
-    books: Book[];
+    services: Service[];
   }
-
+  
   export interface Order {
     id: number;
     userId: number;
     userName: string | null;
-    bookId: number;
-    bookTitle: string;
+    serviceId: number;
+    serviceTitle: string;
     orderDate: string;
-    returned: boolean;
-    returnDate: string | null;
-    finePaid: number;
+    completed: boolean;
+    completeDate: string | null;
+    payment: number;
   }

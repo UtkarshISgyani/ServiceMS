@@ -1,14 +1,43 @@
 <section class="pending">
     <mat-card>
         <mat-card-content>
-            <h2>Pending Service ({{ pendingReturns.length }})</h2>
+            <h2>Pending Services ({{ pendingServices.length  }})</h2>
         </mat-card-content>
     </mat-card>
 
-    @if (pendingReturns.length > 0) {
-    <page-table [columns]="columnsForPendingReturns"
-                [dataSource]="pendingReturns">
-    </page-table>
+    @if (pendingServices.length > 0) {
+        <table mat-table [dataSource]="pendingServices">
+            <ng-container matColumnDef="orderId">
+                <th mat-header-cell *matHeaderCellDef>Order ID</th>
+                <td mat-cell *matCellDef="let element">{{element.id}}</td>
+            </ng-container>
+        
+            <ng-container matColumnDef="serviceId">
+                <th mat-header-cell *matHeaderCellDef>Service ID</th>
+                <td mat-cell *matCellDef="let element">{{element.serviceId}}</td>
+            </ng-container>
+        
+            <ng-container matColumnDef="serviceTitle">
+                <th mat-header-cell *matHeaderCellDef>Service Title</th>
+                <td mat-cell *matCellDef="let element"> {{element.serviceTitle}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="orderDate">
+                <th mat-header-cell *matHeaderCellDef>Order Date</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.orderDate | date:"dd-MMM-YYYY"}}
+                </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="fineToPay">
+                <th mat-header-cell *matHeaderCellDef>Payment</th>
+                <td mat-cell *matCellDef="let element"> {{1000}} </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="columnsForPendingServices"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsForPendingServices"></tr>
+        
+        </table>
     }
     @else {
     <mat-card>
@@ -16,7 +45,7 @@
             <h2>No Orders Done Yet!</h2>
         </mat-card-content>
     </mat-card>
-    }
+}
 
 
 </section>
@@ -24,22 +53,71 @@
 <section class="returned">
     <mat-card>
         <mat-card-content>
-            <h2>Completed Service ({{ completedReturns.length }})</h2>
+            <h2>Completed Orders ({{ completedServices.length }})</h2>
         </mat-card-content>
     </mat-card>
- 
-    @if (completedReturns.length > 0) {
-    <page-table [columns]="columnsForCompletedReturns"
-                [dataSource]="completedReturns">
-    </page-table>
-    }
+
+    @if (completedServices.length > 0) {
+        <table mat-table [dataSource]="completedServices">
+            <ng-container matColumnDef="orderId">
+                <th mat-header-cell *matHeaderCellDef>Order ID</th>
+                <td mat-cell *matCellDef="let element">{{element.id}}</td>
+            </ng-container>
+        
+            <ng-container matColumnDef="serviceId">
+                <th mat-header-cell *matHeaderCellDef>Service ID</th>
+                <td mat-cell *matCellDef="let element">{{element.serviceId}}</td>
+            </ng-container>
+        
+            <ng-container matColumnDef="serviceTitle">
+                <th mat-header-cell *matHeaderCellDef>Service Title</th>
+                <td mat-cell *matCellDef="let element"> {{element.serviceTitle}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="orderDate">
+                <th mat-header-cell *matHeaderCellDef>Order Date</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.orderDate | date:"dd-MMM-YYYY"}}
+                </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="completedDate">
+                <th mat-header-cell *matHeaderCellDef>Completed Date</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.completeDate | date:"dd-MMM-YYYY"}}
+                </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="finePaid">
+                <th mat-header-cell *matHeaderCellDef>Paid</th>
+                <td mat-cell *matCellDef="let element">{{1000}}</td>
+            </ng-container>
+        
+            
+        
+            <tr mat-header-row *matHeaderRowDef="columnsForCompletedServices"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsForCompletedServices"></tr>
+        
+        
+        
+        </table>
+    } 
     @else {
     <mat-card>
         <mat-card-content>
             <h2>No Orders Done Yet!</h2>
         </mat-card-content>
     </mat-card>
-    }
+}
 
 
 </section>
+<!--getFineToPay(element)
+ <page-table [columns]="columnsForPendingReturns"
+                [dataSource]="pendingReturns">
+    </page-table>
+
+<page-table [columns]="columnsForCompletedReturns"
+                [dataSource]="completedReturns">
+    </page-table>
+>-->

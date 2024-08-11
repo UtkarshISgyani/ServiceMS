@@ -1,0 +1,17 @@
+<mat-card>
+    <mat-card-header>
+        <h1>Block User</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+        <mat-form-field color="accent">
+            <mat-label>User ID</mat-label>
+            <input matInput [formControl]="blockUser">
+        </mat-form-field>
+
+        <button mat-stroked-button color="accent" [disabled]="blockUser.invalid"
+                (click)="blockUsers()">
+            <span>Block</span>
+        </button>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,81 @@
+<mat-card>
+    <mat-card-header>
+        <h1>Add New Category</h1>
+    </mat-card-header>
+
+    <mat-card-content [formGroup]="newCategory">
+        <mat-form-field color="accent">
+            <mat-label>Category</mat-label>
+            <input matInput formControlName="category">
+        </mat-form-field>
+
+        <mat-form-field color="accent">
+            <mat-label>SubCategory</mat-label>
+            <input matInput formControlName="subCategory">
+        </mat-form-field>
+
+        <button mat-stroked-button color="accent"
+                [disabled]="newCategory.invalid" (click)="addNewCategory()">
+            <span>Add</span>
+        </button>
+    </mat-card-content>
+</mat-card>
+
+<mat-card>
+    <mat-card-header>
+        <h1>Add New Service</h1>
+    </mat-card-header>
+
+    <mat-card-content [formGroup]="newService">
+
+        <mat-form-field color="accent" class="service-title">
+            <mat-label>Service Title</mat-label>
+            <input matInput formControlName="title">
+        </mat-form-field>
+
+        <mat-form-field color="accent" class="service-serviceType">
+            <mat-label>Service Type</mat-label>
+            <input matInput formControlName="serviceType">
+        </mat-form-field>
+
+        <mat-form-field color="accent" class="service-price">
+            <mat-label>Service Price</mat-label>
+            <input matInput formControlName="price">
+        </mat-form-field>
+
+        <mat-form-field color="accent" class="category-select">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category" #categorySelect>
+                @for (option of categoryOptions; track categoryOptions) {
+                <mat-option [value]="option.value">
+                    {{ option.displayValue | titlecase }}
+                </mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-stroked-button color="accent"
+                [disabled]="newService.invalid || categorySelect.empty"
+                (click)="addNewService()">
+            <span>Add</span>
+        </button>
+    </mat-card-content>
+</mat-card>
+
+<mat-card>
+    <mat-card-header>
+        <h1>Delete Existing Service</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+        <mat-form-field color="accent">
+            <mat-label>Service ID</mat-label>
+            <input matInput [formControl]="deleteService">
+        </mat-form-field>
+
+        <button mat-stroked-button color="accent" [disabled]="deleteService.invalid"
+                (click)="deleteExistingService()">
+            <span>Delete</span>
+        </button>
+    </mat-card-content>
+</mat-card>

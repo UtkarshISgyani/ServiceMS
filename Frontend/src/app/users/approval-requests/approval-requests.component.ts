@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'approval-requests',
   templateUrl: './approval-requests.component.html',
-  styleUrl: './approval-requests.component.scss'
+  styleUrl: './approval-requests.component.scss',
 })
 export class ApprovalRequestsComponent {
   columns: string[] = [

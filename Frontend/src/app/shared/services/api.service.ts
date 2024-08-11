@@ -1,20 +1,19 @@
-import { HttpClient,HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Subject, map } from 'rxjs';
-import { Book, BookCategory, Order, User, UserType } from '../../models/models';
+import { Service, ServiceCategory, Order, User, UserType } from '../../models/models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-  baseUrl: string ='https://localhost:7161/api/Library/';
+  baseUrl: string = 'https://localhost:7051/api/Service/';
   userStatus: Subject<string> = new Subject();
-
-  constructor(private http : HttpClient, private jwt : JwtHelperService) { }
+  constructor(private http: HttpClient, private jwt: JwtHelperService) {}
 
   register(user: any) {
-    return this.http.post(this.baseUrl+'Register', user, {
+    return this.http.post(this.baseUrl + 'Register', user, {
       responseType: 'text',
     });
   }
@@ -52,24 +51,28 @@ export class ApiService {
     };
     return user;
   }
+
   logOut() {
     localStorage.removeItem('access_token');
     this.userStatus.next('loggedOff');
   }
-  getBooks() {
-    return this.http.get<Book[]>(this.baseUrl + 'GetBooks');
+
+  getServices() {
+    return this.http.get<Service[]>(this.baseUrl + 'GetServices');
   }
-  orderBook(book: Book) {
+
+  orderService(service: Service) {
     let userId = this.getUserInfo()!.id;
     let params = new HttpParams()
       .append('userId', userId)
-      .append('bookId', book.id);
+      .append('serviceId', service.id);
 
-    return this.http.post(this.baseUrl + 'OrderBook', null, {
+    return this.http.post(this.baseUrl + 'OrderService', null, {
       params: params,
       responseType: 'text',
     });
   }
+
   getOrdersOfUser(userId: number) {
     let params = new HttpParams().append('userId', userId);
     return this.http
@@ -83,12 +86,12 @@ export class ApiService {
               id: order.id,
               userId: order.userId,
               userName: order.user.firstName + ' ' + order.user.lastName,
-              bookId: order.bookId,
-              bookTitle: order.book.title,
+              serviceId: order.serviceId,
+              serviceTitle: order.service.title,
               orderDate: order.orderDate,
-              returned: order.returned,
-              returnDate: order.returnDate,
-              finePaid: order.finePaid,
+              completed: order.completed,
+              completeDate: order.completeDate,
+              payment: order.payment,
             };
             return newOrder;
           });
@@ -96,57 +99,60 @@ export class ApiService {
         })
       );
   }
-  /*getFine(order: Order) {
-    let today = new Date();
+  getMoney(order: Order) {
+   /* let today = new Date();
     let orderDate = new Date(Date.parse(order.orderDate));
     orderDate.setDate(orderDate.getDate() + 10);
     if (orderDate.getTime() < today.getTime()) {
       var diff = today.getTime() - orderDate.getTime();
-      let days = Math.floor(diff / (1000 * 86400));
-      return days * 50;
-    }
-    return 0;
-  }*/
-  addNewCategory(category: BookCategory) {
+      let days = Math.floor(diff / (1000 * 86400));*/
+      let money = Math.floor(order.payment);
+      return  money;  
+  }
+
+  addNewCategory(category: ServiceCategory) {
     return this.http.post(this.baseUrl + 'AddCategory', category, {
       responseType: 'text',
     });
   }
 
   getCategories() {
-    return this.http.get<BookCategory[]>(this.baseUrl + 'GetCategories');
+    return this.http.get<ServiceCategory[]>(this.baseUrl + 'GetCategories');
   }
 
-  addBook(book: Book) {
-    return this.http.post(this.baseUrl + 'AddBook', book, {
+  addService(service: Service) {
+    return this.http.post(this.baseUrl + 'AddService', service, {
       responseType: 'text',
     });
   }
 
-  deleteBook(id: number) {
-    return this.http.delete(this.baseUrl + 'DeleteBook', {
+  deleteService(id: number) {
+    return this.http.delete(this.baseUrl + 'DeleteService', {
       params: new HttpParams().append('id', id),
       responseType: 'text',
     });
   }
-  returnBook(userId: string, bookId: string /*fine: number*/) {
-    return this.http.get(this.baseUrl + 'ReturnBook', {
+
+  completeService(userId: string, serviceId: string, payment: number) {
+    return this.http.get(this.baseUrl + 'CompleteService', {
       params: new HttpParams()
         .append('userId', userId)
-        .append('bookId', bookId),
-        //.append('fine', fine),
+        .append('serviceId', serviceId)
+        .append('payment', payment),
       responseType: 'text',
     });
   }
   getUsers() {
     return this.http.get<User[]>(this.baseUrl + 'GetUsers');
   }
+
   approveRequest(userId: number) {
     return this.http.get(this.baseUrl + 'ApproveRequest', {
       params: new HttpParams().append('userId', userId),
       responseType: 'text',
     });
   }
+
   getOrders() {
     return this.http.get<any>(this.baseUrl + 'GetOrders').pipe(
       map((orders) => {
@@ -155,12 +161,12 @@ export class ApiService {
             id: order.id,
             userId: order.userId,
             userName: order.user.firstName + ' ' + order.user.lastName,
-            bookId: order.bookId,
-            bookTitle: order.book.title,
+            serviceId: order.serviceId,
+            serviceTitle: order.service.title,
             orderDate: order.orderDate,
-            returned: order.returned,
-            returnDate: order.returnDate,
-            finePaid: order.finePaid,
+            completed: order.completed,
+            completeDate: order.completeDate,
+            payment: order.payment,
           };
           return newOrder;
         });
@@ -170,20 +176,24 @@ export class ApiService {
   }
 
   sendEmail() {
-    return this.http.get(this.baseUrl + 'SendEmailForPendingReturns', {
+    return this.http.get(this.baseUrl + 'SendEmailForPendingServices', {
       responseType: 'text',
     });
   }
 
-  blockUsers() {
-    return this.http.get(this.baseUrl + 'BlockFineOverdueUsers', {
-      responseType: 'text',
-    });
-  }
+    blockUsers(userId: number) {
+      return this.http.get(this.baseUrl + 'BlockUsers', {
+        params: new HttpParams().append('userId', userId),
+        responseType: 'text',
+      });
+    }
+  
+
   unblock(userId: number) {
     return this.http.get(this.baseUrl + "Unblock", {
       params: new HttpParams().append("userId", userId),
       responseType: "text",
     });
   }
+
 }

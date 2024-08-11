@@ -1,0 +1,32 @@
+<mat-card>
+    <mat-card-header>
+        <h1>Complete the Service</h1>
+    </mat-card-header>
+
+    <mat-card-content [formGroup]="completeForm">
+
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>User ID</mat-label>
+            <input matInput formControlName="userId">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Service ID</mat-label>
+            <input matInput formControlName="serviceId">
+        </mat-form-field>
+
+        <div class="fine">
+            <button mat-stroked-button color="accent" (click)="getMoney()">
+                Payment
+            </button>
+            <span [ngStyle]="{'display': payment === null ? 'none' : 'flex'}">
+                {{1000}}Rs
+            </span>
+        </div>
+
+        <button mat-stroked-button color="accent" (click)="completeService()">
+            Complete Service
+        </button>
+
+    </mat-card-content>
+</mat-card>

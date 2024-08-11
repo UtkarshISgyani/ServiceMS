@@ -3,11 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../shared/services/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-
 @Component({
   selector: 'register',
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
   hidePwdContent: boolean = true;
@@ -16,7 +15,7 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
-   private snackBar: MatSnackBar
+    private snackBar: MatSnackBar
   ) {
     this.registerForm = fb.group({
       firstName: fb.control('', [Validators.required]),
@@ -41,6 +40,5 @@ export class RegisterComponent {
         this.snackBar.open(res, 'OK');
       },
     });
-    
   }
 }

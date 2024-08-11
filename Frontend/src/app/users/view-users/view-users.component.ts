@@ -3,11 +3,10 @@ import { AccountStatus, User, UserType } from '../../models/models';
 import { ApiService } from '../../shared/services/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-
 @Component({
   selector: 'view-users',
   templateUrl: './view-users.component.html',
-  styleUrl: './view-users.component.scss'
+  styleUrl: './view-users.component.scss',
 })
 export class ViewUsersComponent {
   columns: string[] = [

@@ -1,13 +1,13 @@
 <mat-card>
     <mat-card-content>
-        <h1>Pending Services</h1>
+        <h1>Orders With Pending Services ({{ordersWithPendingServices.length}})</h1>
 
         <button mat-raised-button color="accent" (click)="sendEmail()">
-            Send Email About Orders
+            Send Email About Pending Services
         </button>
-        <button mat-raised-button color="accent" (click)="blockUsers()">
-            Block Account
-        </button>
+       <!--<button mat-raised-button color="accent" (click)="blockUsers()">
+            Block Overdue Users
+        </button>-->
     </mat-card-content>
 
     <mat-card-footer>
@@ -19,16 +19,16 @@
     </mat-card-footer>
 </mat-card>
 
-<page-table [columns]="columnsForPendingReturns"
-            [dataSource]="ordersWithPendingReturns">
+<page-table [columns]="columnsForPendingServices"
+            [dataSource]="ordersWithPendingServices">
 </page-table>
 
 <mat-card>
     <mat-card-content>
-        <h1>Completed Services</h1>
+    <h1>Orders With Completed Services ({{ordersWithCompletedServices.length}})</h1>
     </mat-card-content>
 </mat-card>
 
-<page-table [columns]="columnsForCompletedReturns"
-            [dataSource]="ordersWithCompletedReturns">
+<page-table [columns]="columnsForCompletedServices"
+            [dataSource]="ordersWithCompletedServices">
 </page-table>

@@ -6,37 +6,36 @@ import { ApiService } from '../../shared/services/api.service';
 @Component({
   selector: 'all-orders',
   templateUrl: './all-orders.component.html',
-  styleUrl: './all-orders.component.scss'
+  styleUrl: './all-orders.component.scss',
 })
 export class AllOrdersComponent {
-  columnsForPendingReturns: string[] = [
+  columnsForPendingServices: string[] = [
     'orderId',
     'userIdForOrder',
     'userNameForOrder',
-    'bookId',
+    'serviceId',
     'orderDate',
-   /* 'fineToPay',*/
+    'fineToPay',
   ];
 
-  columnsForCompletedReturns: string[] = [
+  columnsForCompletedServices: string[] = [
     'orderId',
     'userIdForOrder',
     'userNameForOrder',
-    'bookId',
+    'serviceId',
     'orderDate',
-    'returnedDate',
-    /*'finePaid',*/
+    'completedDate',
+    'finePaid',
   ];
-
   showProgressBar: boolean = false;
-  ordersWithPendingReturns: Order[] = [];
-  ordersWithCompletedReturns: Order[] = [];
+  ordersWithPendingServices: Order[] = [];
+  ordersWithCompletedServices: Order[] = [];
 
   constructor(private apiService: ApiService, private snackBar: MatSnackBar) {
     apiService.getOrders().subscribe({
       next: (res: Order[]) => {
-        this.ordersWithPendingReturns = res.filter((o) => !o.returned);
-        this.ordersWithCompletedReturns = res.filter((o) => o.returned);
+        this.ordersWithPendingServices = res.filter((o) => !o.completed);
+        this.ordersWithCompletedServices = res.filter((o) => o.completed);
       },
       error: (err) => {
         this.snackBar.open('No Orders Found', 'OK');
@@ -50,7 +49,7 @@ export class AllOrdersComponent {
       next: (res) => {
         if (res === 'sent') {
           this.snackBar.open(
-            'Emails have been Sent to respected Students!',
+            'Emails have been Sent to respected Customers!',
             'OK'
           );
           this.showProgressBar = false;
@@ -61,20 +60,4 @@ export class AllOrdersComponent {
       },
     });
   }
-
-  blockUsers() {
-    this.showProgressBar = true;
-    this.apiService.blockUsers().subscribe({
-      next: (res) => {
-        if (res === 'blocked') {
-          this.snackBar.open('Eligible Users Accounts were BLOCKED!', 'OK');
-          this.showProgressBar = false;
-        } else {
-          this.snackBar.open('Not BLOCKED!', 'OK');
-          this.showProgressBar = false;
-        }
-      },
-    });
-  }
-
 }

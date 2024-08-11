@@ -11,13 +11,13 @@ export interface NavigationItem {
 @Component({
   selector: 'page-side-nav',
   templateUrl: './page-side-nav.component.html',
-  styleUrl: './page-side-nav.component.scss'
+  styleUrl: './page-side-nav.component.scss',
 })
 export class PageSideNavComponent {
-   panelName:string='Student Panel';
-   navItems: NavigationItem[] = [];
-   
-   constructor(private apiService: ApiService, private router: Router){
+  panelName: string = '';
+  navItems: NavigationItem[] = [];
+
+  constructor(private apiService: ApiService, private router: Router) {
     apiService.userStatus.subscribe({
       next: (status) => {
         if (status == 'loggedIn') {
@@ -27,18 +27,19 @@ export class PageSideNavComponent {
             if (user.userType == UserType.ADMIN) {
               this.panelName = 'Admin Panel';
               this.navItems = [
-                { value: 'View Service', link: '/home' },
+                { value: 'View Services', link: '/home' },
                 { value: 'Maintenance', link: '/maintenance' },
-                { value: 'Complete Service', link: '/return-book' },
+                { value: 'Complete Service', link: '/complete-service' },
                 { value: 'View Users', link: '/view-users' },
                 { value: 'Aprooval Requests', link: '/approval-requests' },
                 { value: 'All Orders', link: '/all-orders' },
                 { value: 'My Orders', link: '/my-orders' },
+                { value: 'Block Users', link: '/block-users' },
               ];
-            } else if (user.userType == UserType.STUDENT) {
+            } else if (user.userType == UserType.CUSTOMER) {
               this.panelName = 'Customer Panel';
               this.navItems = [
-                { value: 'View Service', link: '/home' },
+                { value: 'View Services', link: '/home' },
                 { value: 'My Orders', link: '/my-orders' },
               ];
             }
@@ -50,5 +51,5 @@ export class PageSideNavComponent {
         }
       },
     });
-   }
+  }
 }
